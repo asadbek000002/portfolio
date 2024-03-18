@@ -4,4 +4,3 @@ env
 *.sqlite3
 __pycache__
 media
-static
