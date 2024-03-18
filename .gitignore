@@ -2,6 +2,6 @@ venv
 env
 .idea
 *.sqlite3
-__pycahce__
+__pycache__
 media
 static
