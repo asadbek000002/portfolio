@@ -1,0 +1,7 @@
+venv
+env
+.idea
+*.sqlite3
+__pycahce__
+media
+static
