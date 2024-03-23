@@ -9,7 +9,7 @@ def contact_create(request):
         print(form)
         if form.is_valid():
             form.save()
-            return redirect('contact_create')
+            return redirect('contact')
     else:
         form = ContactForm()
         return render(request, 'contact.html', {"form": form})
