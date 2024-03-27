@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -42,7 +42,7 @@ def registration(request):
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST.get('usernamelogin')
+        username = request.POST.get('usernamelogin').lower()
         password = request.POST.get('passwordlogin')
         user = authenticate(request, username=username, password=password)
         if user is not None:
@@ -53,3 +53,23 @@ def login_view(request):
             messages.error(request, 'Noto‘g‘ri foydalanuvchi nomi yoki parol.')
     return render(request, 'registrations/login.html')
 
+
+def login_photo(request):
+    if request.method == 'POST':
+        year = request.POST.get('year')
+        month = request.POST.get('month')
+        day = request.POST.get('day')
+        password = year + month + day
+        user = authenticate(request, username='dilnora', password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'Muvoffaqiyatli kirish!')
+            return redirect('photo')  # O'zgartiring kerak bo'lsa
+        else:
+            messages.error(request, "Afsuski bu tug'ilgan yil bilan kira olmaysiz")
+    return render(request, 'registrations/registration.html')
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('home')

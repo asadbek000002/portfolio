@@ -13,15 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
 </head>
-
-<body>
-
-
-<div class="main">
-    <input type="checkbox" id="chk" aria-hidden="true" {% if checkbox_value %} checked {% endif %}>
-
-    <div class="signup">
-        {% if messages %}
+{% if messages %}
 <div id="message-box">
     <ul class="messages">
         {% for message in messages %}
@@ -33,6 +25,13 @@
 
 </div>
 {% endif %}
+<body>
+
+
+<div class="main">
+    <input type="checkbox" id="chk" aria-hidden="true" {% if checkbox_value %} checked {% endif %}>
+
+    <div class="signup">
         <form method="post" action="{% url 'registration' %}">
             {% csrf_token %}
             <label for="chk" aria-hidden="true" style="color: #6d44b8;">Sign up</label>
@@ -59,43 +58,73 @@
 
 <style>
     #message-box {
-       position: fixed;
-       top: 20px; /* Yukori qismga uzluksiz masofada */
-       left: 50%; /* Ekranning markaziga o'rnash */
-       transform: translateX(-50%); /* Markazga o'rnash */
-       text-align: center;
-       line-height: 230px;
-       color: #5045e0; /* Matndagi so'zning rangi */
+    position: fixed;
+    top: 20px; /* Yukori qismga uzluksiz masofada */
+    left: 50%; /* Ekranning markaziga o'rnash */
+    transform: translateX(-50%); /* Markazga o'rnash */
+    text-align: center; /* Matn markazga joylasin */
+    color: #5045e0; /* Matndagi so'zning rangi */
+}
 
-   }
+#message-box ul {
+    list-style: none; /* Ro'yxat belgilari o'chirilsin */
+    padding: 0; /* Ul nomli elementning yengi achilish (padding)ini o'chirish */
+    margin: 0; /* Bo'shliklarni o'chirish */
+}
 
-   #message-box ul {
-       list-style: none;
-       padding: 0;
-   }
-
-
+#message-box li {
+    margin-bottom: 5px; /* Har bir xabar orasida pastki bo'shlik */
+    line-height: 1.2; /* Satr balandligi */
+}
 
 
 </style>
 
 <script>
 
+   document.addEventListener('DOMContentLoaded', function() {
+   var messageBox = document.getElementById('message-box');
+   if (messageBox) {
+       var messages = messageBox.querySelectorAll('ul.messages li');
+       var lastMessage = messages[messages.length - 1];
 
- document.addEventListener("DOMContentLoaded", function() {
-     var checkbox = document.getElementById("chk");
-     var currentChecked = localStorage.getItem('checkboxChecked'); // Hozirgi holatni lokal ma'lumotlar bazasiga saqlash
-     if (currentChecked === 'true') {
-         checkbox.checked = true; // Agar hozirgi holat true bo'lsa, checkbox ni belgilash
-     } else {
-         checkbox.checked = false; // Agar hozirgi holat false bo'lsa, checkbox ni belgilamaslik
-     }
+       // Xabarlarni 4 sekunddan keyin avtomatik ravishda o'chirish
+       setTimeout(function() {
+           removeLastMessage();
+       }, 2000); // 4 sekund uchun 4000 millisecondsdan foydalaniladi
 
-     // Checkbox o'zgarishida hozirgi holatni lokal ma'lumotlar bazasiga saqlash
-     checkbox.addEventListener('change', function() {
-         localStorage.setItem('checkboxChecked', checkbox.checked);
-     });
- });
+       // Oxirgi xabardan oldingi xabarni o'chirish
+       if (messages.length > 1) {
+           var secondLastMessage = messages[messages.length - 2];
+           secondLastMessage.style.display = 'none';
+       }
+   }
+
+   function removeLastMessage() {
+       if (lastMessage) {
+           lastMessage.remove();
+       }
+   }
+});
+
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var checkbox = document.getElementById("chk");
+        var currentChecked = localStorage.getItem('checkboxChecked'); // Hozirgi holatni lokal ma'lumotlar bazasiga saqlash
+        if (currentChecked === 'true') {
+            checkbox.checked = true; // Agar hozirgi holat true bo'lsa, checkbox ni belgilash
+        } else {
+            checkbox.checked = false; // Agar hozirgi holat false bo'lsa, checkbox ni belgilamaslik
+        }
+
+        // Checkbox o'zgarishida hozirgi holatni lokal ma'lumotlar bazasiga saqlash
+        checkbox.addEventListener('change', function() {
+            localStorage.setItem('checkboxChecked', checkbox.checked);
+        });
+    });
 
 
 </script>

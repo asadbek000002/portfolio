@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import is_password_usable
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from datetime import datetime
 
 
 class CustomUser(AbstractUser):
@@ -46,12 +47,35 @@ class BaseModel(models.Model):
 
 
 class Contact(BaseModel):
-    name = models.CharField(max_length=250)
-    body = models.TextField()
+    chat = models.CharField(max_length=250)
 
     class Meta:
         verbose_name = 'Contact'
         verbose_name_plural = 'Contacts'
 
     def __str__(self):
+        return self.chat
+
+
+class Signal(BaseModel):
+    view_photo = models.IntegerField(default=0)
+
+
+class Room(BaseModel):
+    name = models.CharField(max_length=1000)
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+
+
+    def __str__(self):
         return self.name
+
+
+class Message(models.Model):
+    value = models.CharField(max_length=1000000)
+    date = models.DateTimeField(default=datetime.now, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+    user1 = models.CharField(max_length=1000000)
+    room = models.CharField(max_length=1000000)
+
+    def __str__(self):
+        return str(self.user)

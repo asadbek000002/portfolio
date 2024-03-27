@@ -1,5 +1,10 @@
+from django.contrib import messages
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
 from post.models import ImportantEvents, Photos
+from user.models import Signal
 
 
 def important_events(request):
@@ -13,5 +18,16 @@ def events_detail(request, id):
 
 
 def photo(request):
-    photos = Photos.objects.all()
-    return render(request, 'photo.html', {'photos': photos})
+    if request.user.is_authenticated:
+        if request.user.username == "dilnora" or request.user.username == "asadbek":
+            if request.user.username == "dilnora":
+                signal_object = Signal.objects.order_by('-id').first()
+                signal_object.view_photo += 1
+                Signal.objects.create(view_photo=signal_object.view_photo)
+            photos = Photos.objects.all()
+            return render(request, 'photo.html', {'photos': photos})
+        else:
+            return HttpResponseRedirect(reverse('login_photo'))
+
+    else:
+        return HttpResponseRedirect(reverse('login'))

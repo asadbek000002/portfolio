@@ -1322,10 +1322,17 @@ input[type="text"] {
   color: #FF9000;
   padding-left: 10px;
   padding-right: 10px;
-  font-weight: 900; /* Matnning yanada qalinroq bo'lishini sozlaydi */
-  font-size: larger; /
+  font-size: larger; /* Matn o'lchamini kattalashtirish */
   transition: all 0.9s ease;
 }
+
+@media (min-width: 100px) {
+  .fh5co-social-icons li a {
+    display: block; /* Ekran o'lchami 600px dan katta bo'lganda blok elementga aylantiriladi */
+    float: left; /* Matn o'lchamini kattalashtirish */
+  }
+}
+
 
 .fh5co-social-icons li a:hover {
     transform: translateY(-2px); /* So'zni yuqoriga yassi uchun alohida bir meyda tuzilgan */
