@@ -65,7 +65,6 @@ class Room(BaseModel):
     name = models.CharField(max_length=1000)
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
 
-
     def __str__(self):
         return self.name
 
