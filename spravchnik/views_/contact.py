@@ -9,10 +9,6 @@ def contact_create(request):
     return render(request, 'contact.html')
 
 
-# def home(request):
-#     return render(request, 'home.html')
-
-
 def room_(request, room):
     room_details = Room.objects.get(name=room)
     username = room_details.user
@@ -53,6 +49,7 @@ def send(request):
     current_user = request.user
     user = current_user
     room_id = request.POST['room_id']
+    print(room_id)
 
     new_message = Message.objects.create(value=message, user1=user, user=user, room=room_id)
     new_message.save()

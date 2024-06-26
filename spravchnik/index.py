@@ -12,7 +12,7 @@ User = get_user_model()
 def registration(request):
     if request.method == 'POST':
         # Formdan ma'lumotlarni olish
-        username = request.POST.get('username')
+        username = request.POST.get('username').lower()
         phone = request.POST.get('phone')
         password = request.POST.get('password')
         try:
@@ -60,7 +60,7 @@ def login_photo(request):
         month = request.POST.get('month')
         day = request.POST.get('day')
         password = year + month + day
-        user = authenticate(request, username='dilnora', password=password)
+        user = authenticate(request, username='asadbek', password=password)
         if user is not None:
             login(request, user)
             messages.success(request, 'Muvoffaqiyatli kirish!')

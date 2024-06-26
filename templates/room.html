@@ -79,7 +79,7 @@
                         <div class="timeline-badge"><i class="icomoon icon-cool"></i></div>
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                                <a href="{% url 'room' room.name %}" class="timeline-title"> {{ room.user.username }} </a>
+                                <a href="{% url 'room' room.name room.user.username %}" class="timeline-title"> {{ room.user.username }} </a>
                             </div>
                             <div class="timeline-body">
                                 <p>{{ room.user.username }}</p><br>
