@@ -10,230 +10,207 @@
     <meta name="keywords" content="my blog, bekbola.uz, asadbek, dasturchi, Bek bola, bekbola, "/>
     <meta name="author" content="bekbola.uz"/>
 
-    <!--
-    //////////////////////////////////////////////////////
-
-    FREE HTML5 TEMPLATE
-    DESIGNED & DEVELOPED by FreeHTML5.co
-
-    Website: 		http://freehtml5.co/
-    Email: 			info@freehtml5.co
-    Twitter: 		http://twitter.com/fh5co
-    Facebook: 		https://www.facebook.com/fh5co
-
-    //////////////////////////////////////////////////////
-     -->
-
-    <!-- Facebook and Twitter integration -->
-    <meta property="og:title" content=""/>
-    <meta property="og:image" content=""/>
-    <meta property="og:url" content=""/>
-    <meta property="og:site_name" content=""/>
-    <meta property="og:description" content=""/>
-    <meta name="twitter:title" content=""/>
-    <meta name="twitter:image" content=""/>
-    <meta name="twitter:url" content=""/>
-    <meta name="twitter:card" content=""/>
-
-
     <!-- Icomoon Icon Fonts-->
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        .container {
-         border: 2px solid #0088cc; /* Border rangi Telegram Messengerining rangi */
-         background-color: #eff8ff; /* Background rangi Telegram Messengerining rangi */
-         border-radius: 10px; /* Radius */
-         padding: 10px;
-         margin: 4px 0;
-         max-width: 100%; /* Xabar o'lchami */
-         clear: both;
-         word-wrap: break-word; /* Matn kelajakda chiqish uchun qatlanadi */
-         overflow: hidden; /* Qolgan matn ko'rinib turadi */
-     }
+         body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            margin: 0; /* Remove default body margin */
+        }
+        .chat-container {
+            max-width: 100%; /* Full width on both desktop and mobile */
+            margin: 0; /* Remove margin */
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .chat-header {
+            padding: 15px;
+            background: #FF9000;
+            color: #fff;
+            text-align: center;
+            font-size: 24px;
+            margin: 0; /* Remove margin */
+        }
+        .chat-messages {
+            height: 80vh; /* 60% of viewport height */
+            overflow-y: auto;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            margin: 0; /* Remove margin */
+        }
+        .chat-message {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 15px;
+        }
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+        .chat-message p {
+            background: #f1f1f1;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 70%;
+            word-wrap: break-word;
+            margin: 0; /* Remove margin */
+        }
+        .chat-message.user p {
+            background: #FF9000;
+            color: #fff;
+        }
+        .chat-footer {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            position: fixed; /* Fixing the footer at the bottom */
+            bottom: 0; /* Aligning at the bottom */
+            width: 100%; /* Full width */
+            background-color: #f8f9fa; /* Footer background color */
+            border-top: 1px solid #ccc; /* Top border */
+        }
+        .chat-footer input[type=text] {
+            flex: 1;
+            width:90%;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+            margin-bottom: 10px; /* Add margin bottom */
+        }
+        .chat-footer input[type=submit] {
+            float: right;
+            background: #FF9000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-bottom: 10px; /* Add margin bottom */
+            margin-left: 10px; /* Adjust margin as needed */
+        }
 
-     .darker {
-         float: left; /* Xabarlarni chap tomondan chiqarish */
-         clear: both;
-     }
-
-     .container img {
-         float: left; /* Profil rasmini chapga surish */
-         max-width: 50px;
-         width: 100%;
-         margin-right: 10px;
-         border-radius: 50%;
-     }
-
-     .container img.right {
-         float: right; /* Profil rasmini ongga surish */
-         margin-left: 10px;
-         margin-right: 0;
-     }
-
-     .time-left {
-         float: left; /* Sanani chap tomondan chiqarish */
-         color: #999; /* Sananing rangi */
-     }
-
-     .time-right {
-         float: right; /* Sanani ong tomondan chiqarish */
-         color: #999; /* Sananing rangi */
-     }
 
 
-              .lighter {
-         float: right; /* Xabarlarni ong tomondan chiqarish */
-         border-color: #4CAF50; /* Border rangi */
-         background-color: #E8F5E9; /* Background rangi */
-     }
 
-     .lighter p {
-         text-align: left; /* Matnning o'ng tomondan chiqishini belgilash */
-     }
+        /* Media query for mobile devices */
+        @media screen and (max-width: 768px) {
+            .chat-footer {
+                flex-direction: column; /* Stack elements vertically */
+                padding: 10px;
+            }
 
-     .lighter span {
-         float: right; /* Sanani ong tomondan chiqarish */
-         color: #aaa; /* Sananing rangi */
-     }
+            .chat-footer input[type=text] {
+                width: 100%; /* Full width for input on small screens */
+                margin-right: 0;
+                margin-bottom: 5px; /* Reduce margin bottom */
+            }
+
+            .chat-footer input[type=submit] {
+                width: 100%; /* Full width for submit button on small screens */
+                margin-left: 0;
+                margin-bottom: 0; /* Remove margin bottom */
+            }
+        }
+
+
+
+
+
 
     </style>
-
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
-
 </head>
 <body>
+    	<a href="{% url 'home' %}" class="arrow"><i class="icomoon icon-home"></i></a>
 
 
-<a href="{% url 'home' %}" class="arrow"><i class="icomoon icon-home"></i></a><br>
-<h2>{{username}} - Asadbek Chat</h2>
-
-<div id="display">
-
-    <!-- <div class="container darker">
-      <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
-      <span class="time-left">20th, April 2021</span>
-    </div> -->
-
+<div class="chat-container">
+    <div class="chat-header">
+        {{ username }} - Asadbek Chat
+    </div>
+    <div id="display" class="chat-messages">
+        <!-- Messages will be loaded here -->
+    </div>
+    <div class="chat-footer">
+        <form id="post-form" class="w-100">
+            {% csrf_token %}
+            <input type="hidden" name="username" id="username" value="{{ username }}"/>
+            <input type="hidden" name="room_id" id="room_id" value="{{ room_details.id }}"/>
+            <input type="text" name="message" id="message" placeholder="Xabar yozing...">
+            <input type="submit" value="Yuborish">
+        </form>
+    </div>
 </div>
 
 <script>
     $(document).ready(function(){
+        // Fetch messages every 1 second
+        setInterval(function(){
+            $.ajax({
+                type: 'GET',
+                url: "/getMessages/{{ room }}/",
+                success: function(response){
+                    $("#display").empty();
+                    for (var key in response.messages) {
+                        var username = response.messages[key].user1;
+                        var value = response.messages[key].value;
 
-    setInterval(function(){
-        $.ajax({
-            type: 'GET',
-            url : "/getMessages/{{room}}/",
-            success: function(response){
-                console.log(response);
-                $("#display").empty();
-                for (var key in response.messages)
-                {
-
-                    var username = response.messages[key].user1;
-                    var value = response.messages[key].value;
-                    var date = response.messages[key].date;
-
-                    // Foydalanuvchi o'z o'zi xabarni yuborgan bo'lsa
-                    if (username == "{{ request.user }}") {
-                        var temp = "<div class='container lighter'>" +
-
-                                       "<p>" + value + "</p>" +
-
+                        var messageClass = (username == "{{ request.user }}") ? 'chat-message user' : 'chat-message';
+                        var temp = "<div class='" + messageClass + "'>" +
+                                    "<p>" + value + "</p>" +
                                    "</div>";
-                    } else {
-                        var temp = "<div class='container darker'>" +
-
-                                       "<p>" + value + "</p>" +
-
-                                   "</div>";
+                        $("#display").append(temp);
                     }
-
-                    $("#display").append(temp);
+                },
+                error: function(response){
+                    alert('Xatolik yuz berdi');
                 }
+            });
+        }, 1000);
+    });
+
+    // Handle form submission
+    $(document).on('submit', '#post-form', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/send',
+            data: {
+                username: $('#username').val(),
+                room_id: $('#room_id').val(),
+                message: $('#message').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(data){
+                console.log('Xabar jo\'natildi:', data);
+                $('#message').val('');
+
+                // Append new message to chat
+                var chatMessages = $('#display');
+                var newMessage = "<div class='chat-message'>" +
+                                    "<p>" + data.message + "</p>" +
+                                 "</div>";
+                chatMessages.append(newMessage);
+
+                // Scroll to bottom of chat messages
+                chatMessages.animate({ scrollTop: chatMessages.prop("scrollHeight") }, "slow");
             },
             error: function(response){
-                alert('An error occurred')
+                alert('Xatolik yuz berdi');
             }
         });
-    },1000);
-});
-</script>
-
-
-<div class="container">
-    <style>
-        input[type=text], select {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        }
-
-        input[type=submit] {
-        width: 100%;
-        background-color: #4CAF50;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        }
-
-        input[type=submit]:hover {
-        background-color: #45a049;
-        }
-
-        div {
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        padding: 20px;
-        }
-    </style>
-
-    <form id="post-form">
-        {% csrf_token %}
-        <input type="hidden" name="username" id="username" value="{{username}}"/>
-        <input type="hidden" name="room_id" id="room_id" value="{{room_details.id}}"/>
-        <input type="text" name="message" id="message" width="100px"/>
-        <input type="submit" value="Send">
-    </form>
-</div>
-
-
-</body>
-
-<script type="text/javascript">
-    $(document).on('submit','#post-form',function(e){
-      e.preventDefault();
-
-      $.ajax({
-        type:'POST',
-        url:'/send',
-        data:{
-            username:$('#username').val(),
-            room_id:$('#room_id').val(),
-            message:$('#message').val(),
-          csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-        },
-        success: function(data){
-           //alert(data)
-        }
-      });
-      document.getElementById('message').value = ''
     });
 </script>
 
+</body>
 </html>
-
-

@@ -41,6 +41,8 @@
         <form method="post" action="{% url 'login_photo' %}">
             {% csrf_token %}
             <label for="chek" aria-hidden="true">Password</label>
+            <input type="text" name="smile" placeholder="smile name" required="">
+
              <div class="input-group">
                 <input type="text" name="year" placeholder="YYYY" maxlength="4" required="" >
              </div>

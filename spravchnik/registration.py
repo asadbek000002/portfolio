@@ -56,17 +56,18 @@ def login_view(request):
 
 def login_photo(request):
     if request.method == 'POST':
+        smile = request.POST.get('smile')
         year = request.POST.get('year')
         month = request.POST.get('month')
         day = request.POST.get('day')
-        password = year + month + day
-        user = authenticate(request, username='asadbek', password=password)
+        password = smile + year + month + day
+        user = authenticate(request, username='dilnora', password=password)
         if user is not None:
             login(request, user)
             messages.success(request, 'Muvoffaqiyatli kirish!')
             return redirect('photo')  # O'zgartiring kerak bo'lsa
         else:
-            messages.error(request, "Afsuski bu tug'ilgan yil bilan kira olmaysiz")
+            messages.error(request, "Afsuski bu smile nomi va tug'ilgan yil bilan kira olmaysiz")
     return render(request, 'registrations/registration.html')
 
 

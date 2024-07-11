@@ -1,8 +1,12 @@
-import random
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
 from django.urls import reverse
 from django.shortcuts import render, redirect
+import random
+
 from user.models import Room, Message
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 
 
 def contact_create(request):
@@ -39,33 +43,45 @@ def checkview(request):
             new_room.save()
             room = new_room.name  # room o'zgaruvchisini aniqlash
 
-        return redirect('/' + room + '/?username=' + username)
+        return redirect('room-/' + room + '/?username=' + username)
     else:
         return HttpResponseRedirect(reverse('login'))
 
 
+@csrf_exempt
 def send(request):
-    message = request.POST['message']
-    current_user = request.user
-    user = current_user
-    room_id = request.POST['room_id']
-    print(room_id)
+    if request.method == 'POST':
+        try:
+            message = request.POST['message']
+            current_user = request.user
+            room_id = request.POST['room_id']
+            print(room_id)
 
-    new_message = Message.objects.create(value=message, user1=user, user=user, room=room_id)
-    new_message.save()
-    return HttpResponse('Message sent successfully')
+            new_message = Message.objects.create(
+                value=message,
+                user1=current_user.username,
+                user=current_user,
+                room=room_id,
+                date=timezone.now()  # Vaqt zonasi yordami bilan hozirgi vaqtni olamiz
+            )
+            new_message.save()
+            return HttpResponse('Message sent successfully')
+        except Exception as e:
+            return JsonResponse({'status': 'Xato', 'message': str(e)}, status=500)
+    return JsonResponse({'status': 'Xato', 'message': 'Noto\'g\'ri so\'rov'}, status=400)
 
 
+@login_required
 def getMessages(request, room):
-    if request.user.is_authenticated:
+    try:
         room_details = Room.objects.get(name=room)
         messages = Message.objects.filter(room=room_details.id).values('value', 'date', 'user1')
-        return JsonResponse({"messages": list(messages.values())})
-    else:
-        return HttpResponseRedirect(reverse('login'))
+        return JsonResponse({"messages": list(messages)})
+    except Room.DoesNotExist:
+        return JsonResponse({"error": f"Room '{room}' not found"}, status=404)
 
 
 def get_room(request):
     rooms = Room.objects.all()
-    print(rooms)
+
     return render(request, 'room.html', {'rooms': rooms})
