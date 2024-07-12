@@ -36,7 +36,7 @@ class Photos(BaseModel):
 
 class Like(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
-    events = models.ForeignKey(ImportantEvents, on_delete=models.CASCADE, related_name='car_likes')
+    events = models.ForeignKey(ImportantEvents, on_delete=models.CASCADE, related_name='event_likes')
     cookie_id = models.UUIDField(default=uuid.uuid4, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
 

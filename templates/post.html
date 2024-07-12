@@ -55,6 +55,9 @@
     <script src="{% static 'js/respond.min.js' %}"></script>
     <![endif]-->
 
+    <script src="{% static 'js/like.js' %}"></script>
+
+
 </head>
 <body>
 <a href="{% url 'home' %}" class="arrow"><i class="icomoon icon-home"></i></a>
@@ -77,7 +80,7 @@
                         <p>{{ event.body }}</p>
                         <ul class="stuff">
                             <li>
-                                <i id="like-icon-{{ event.id }}" class="icon-heart2" onclick="likeCar({{ event.id }})"
+                                <i id="like-icon-{{ event.id }}" class="icon-heart2" onclick="likeEvent({{ event.id }})"
                                    style="cursor: pointer; color: {% if event.user_has_liked %}red{% else %}black{% endif %};"></i>
                                 <span id="likes-count-{{ event.id }}">{{ event.like }}</span>
                             </li>
@@ -91,51 +94,7 @@
         </div>
     </div>
 </div>
-<script>
-    function getCookie(name) {
-     let cookieValue = null;
-     if (document.cookie && document.cookie !== '') {
-         const cookies = document.cookie.split(';');
-         for (let i = 0; i < cookies.length; i++) {
-             const cookie = cookies[i].trim();
-             if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                 break;
-             }
-         }
-     }
-     return cookieValue;
- }
 
- const csrftoken = getCookie('csrftoken');
-
- function likeCar(eventId) {
-     fetch(`/like/${eventId}/`, {
-         method: 'POST',
-         headers: {
-             'X-CSRFToken': csrftoken,
-             'Content-Type': 'application/json'
-         }
-     })
-     .then(response => response.json())
-     .then(data => {
-         if (data.status === 'like' || data.status === 'unlike') {
-             console.log(`Event ${eventId} likes updated to ${data.like_count}`);
-             document.getElementById(`likes-count-${eventId}`).innerText = data.like_count;
-             let icon = document.getElementById(`like-icon-${eventId}`);
-             if (data.status === 'like') {
-                 icon.style.color = 'red';
-             } else {
-                 icon.style.color = 'black';
-             }
-         } else {
-             console.error('Unexpected response:', data);
-         }
-     })
-     .catch(error => console.error('Error:', error));
- }
-
-</script>
 
 <div id="fh5co-footer">
     <div class="container">

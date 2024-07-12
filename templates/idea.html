@@ -8,8 +8,8 @@
     <title>Bek Bola</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Tuygunov Asadbek: Shaxsiy blog Shaxsiy fikrlar "/>
-	<meta name="keywords" content="my blog, bekbola.uz, asadbek, dasturchi," />
-	<meta name="author" content="bekbola.uz" />
+    <meta name="keywords" content="my blog, bekbola.uz, asadbek, dasturchi,"/>
+    <meta name="author" content="bekbola.uz"/>
 
     <!--
     //////////////////////////////////////////////////////
@@ -55,6 +55,7 @@
     <!--[if lt IE 9]>
     <script src="{% static 'js/respond.min.js' %}"></script>
     <![endif]-->
+    <script src="{% static 'js/like.js' %}"></script>
 
 </head>
 <body>
@@ -74,7 +75,7 @@
                 <ul class="timeline">
                     <li class="timeline-heading text-center animate-box">
                         <div><h3>just read it </h3></div>
-                        {% for idea in ideas|slice:"8" %}
+                        {% for idea in ideas %}
                     <li class="animate-box {% if forloop.counter0|divisibleby:2 %}timeline-unverted{% else %}timeline-inverted{% endif %}">
                         <div class="timeline-badge"><i class="icomoon icon-cool"></i></div>
                         <div class="timeline-panel">
@@ -86,6 +87,14 @@
                             </div>
                             <div class="timeline-heading">
                                 <span class="company">{{ idea.created_time }}</span>
+                                <div class="like-section">
+                                    <i id="like-icon-{{ idea.id }}" class="icon-heart2 like-icon"
+                                       onclick="likeIdea({{ idea.id }})"
+                                       style="cursor: pointer; color: {% if idea.user_has_liked %}red{% else %}black{% endif %};"></i>
+                                    <span id="likes-count-{{ idea.id }}">{{ idea.like }}</span>
+                                </div>
+
+
                             </div>
                         </div>
                     </li>
@@ -96,6 +105,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Futer -->
 
