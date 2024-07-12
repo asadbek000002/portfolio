@@ -1,4 +1,6 @@
+import uuid
 from django.db import models
+from user.models import CustomUser
 
 
 class BaseModel(models.Model):
@@ -10,6 +12,7 @@ class ImportantEvents(BaseModel):
     title = models.CharField(max_length=250)
     body = models.TextField()
     image = models.ImageField(upload_to='image/important_events')
+    like = models.IntegerField(default=0, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Important Event'
@@ -29,3 +32,13 @@ class Photos(BaseModel):
 
     def __str__(self):
         return self.title
+
+
+class Like(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    events = models.ForeignKey(ImportantEvents, on_delete=models.CASCADE, related_name='car_likes')
+    cookie_id = models.UUIDField(default=uuid.uuid4, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'events', 'cookie_id')

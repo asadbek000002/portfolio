@@ -15,8 +15,5 @@ def home(request):
 
 
 def idea_blog(request):
-    if request.user.is_authenticated:
-        ideas = IdeaBlog.objects.all().order_by('-created_time')
-        return render(request, 'idea.html', {'ideas': ideas})
-    else:
-        return HttpResponseRedirect(reverse('registration'))
+    ideas = IdeaBlog.objects.all().order_by('-created_time')
+    return render(request, 'idea.html', {'ideas': ideas})
