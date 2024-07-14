@@ -146,11 +146,11 @@
                                 <div class="timeline-heading">
                                     <span class="company">{{ idea.created_time }}</span>
                                     <div class="like-section">
-    <i id="like-icon-{{ idea.id }}" class="icon-heart2 like-icon"
-       onclick="likeIdea({{ idea.id }})"
-       style="cursor: pointer; color: {% if idea.user_has_liked %}red{% else %}black{% endif %};"></i>
-    <span id="likes-count-{{ idea.id }}">{{ idea.like }}</span>
-</div>
+                                        <i id="like-icon-{{ idea.id }}" class="icon-heart2 like-icon"
+                                           onclick="likeIdea({{ idea.id }})"
+                                           style="cursor: pointer; color: {% if idea.user_has_liked %}red{% else %}black{% endif %};"></i>
+                                        <span id="likes-count-{{ idea.id }}">{{ idea.like }}</span>
+                                    </div>
 
                                 </div>
                             </div>
