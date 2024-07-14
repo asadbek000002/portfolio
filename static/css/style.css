@@ -1313,30 +1313,43 @@ input[type="text"] {
 }
 
 /*# sourceMappingURL=style.css.map */
+.fh5co-social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.fh5co-social-icons li {
+  list-style: none;
+}
 
 .fh5co-social-icons li a {
-  display: -moz-inline-stack;
   display: inline-block;
-  zoom: 1;
-  *display: inline;
   color: #FF9000;
-  padding-left: 10px;
-  padding-right: 10px;
-  font-size: larger; /* Matn o'lchamini kattalashtirish */
-  transition: all 0.9s ease;
+  padding: 8px 10px;
+  font-size: medium;
+  transition: all 0.3s ease;
+  background: linear-gradient(to right, #FFA500, #FF7F50);
+  border-radius: 20px;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  margin: 5px;
 }
-
-@media (min-width: 100px) {
-  .fh5co-social-icons li a {
-    display: block; /* Ekran o'lchami 600px dan katta bo'lganda blok elementga aylantiriladi */
-    float: left; /* Matn o'lchamini kattalashtirish */
-  }
-}
-
 
 .fh5co-social-icons li a:hover {
-    transform: translateY(-2px); /* So'zni yuqoriga yassi uchun alohida bir meyda tuzilgan */
-    box-shadow: 0 2px 4px rgba(0, 1, 0.6, 10); /* So'zga qosnish qimillash */
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to right, #FF7F50, #FFA500);
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+  .fh5co-social-icons li a {
+    padding: 6px 8px;
+    font-size: smaller; /* Kichikroq o'lcham */
+  }
 }
 
 

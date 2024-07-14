@@ -153,31 +153,30 @@
 </div>
 
 <script>
-    $(document).ready(function(){
-        // Fetch messages every 1 second
-        setInterval(function(){
-            $.ajax({
-                type: 'GET',
-                url: "/getMessages/{{ room }}/",
-                success: function(response){
-                    $("#display").empty();
-                    for (var key in response.messages) {
-                        var username = response.messages[key].user1;
-                        var value = response.messages[key].value;
+   $(document).ready(function(){
+    // Fetch messages every 1 second
+    setInterval(function(){
+        $.ajax({
+            type: 'GET',
+            url: "/getMessages/{{ room }}/",
+            success: function(response){
+                $("#display").empty();
+                for (var key in response.messages) {
+                    var username = response.messages[key].user1;
+                    var value = response.messages[key].value;
 
-                        var messageClass = (username == "{{ request.user }}") ? 'chat-message user' : 'chat-message';
-                        var temp = "<div class='" + messageClass + "'>" +
-                                    "<p>" + value + "</p>" +
-                                   "</div>";
-                        $("#display").append(temp);
-                    }
-                },
-                error: function(response){
-                    alert('Xatolik yuz berdi');
+                    var messageClass = (username == "{{ request.user }}") ? 'chat-message user' : 'chat-message';
+                    var temp = "<div class='" + messageClass + "'>" +
+                                "<p>" + value + "</p>" +
+                               "</div>";
+                    $("#display").append(temp);
                 }
-            });
-        }, 1000);
-    });
+            },
+            error: function(response){
+                alert('Xatolik yuz berdi');
+            }
+        });
+    }, 1000);
 
     // Handle form submission
     $(document).on('submit', '#post-form', function(e){
@@ -204,12 +203,19 @@
 
                 // Scroll to bottom of chat messages
                 chatMessages.animate({ scrollTop: chatMessages.prop("scrollHeight") }, "slow");
+
+                // Klaviaturani qayta ochish
+                setTimeout(function() {
+                    $('#message').focus();
+                }, 300); // 300 ms kechikish bilan klaviaturani ochish
             },
             error: function(response){
                 alert('Xatolik yuz berdi');
             }
         });
     });
+});
+
 </script>
 
 </body>
