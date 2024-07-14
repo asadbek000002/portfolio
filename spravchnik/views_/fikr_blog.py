@@ -19,10 +19,19 @@ def home(request):
 def idea_blog(request):
     ideas = IdeaBlog.objects.all().order_by('-created_time')
     cookie_id = request.COOKIES.get('cookie_id')
-    for idea in ideas:
-        idea.user_has_liked = LikeIdea.objects.filter(idea=idea, cookie_id=cookie_id).exists()
-    return render(request, 'idea.html', {'ideas': ideas})
+    liked_ideas = LikeIdea.objects.filter(cookie_id=cookie_id).values_list('idea_id', flat=True)
 
+    for idea in ideas:
+        idea.user_has_liked = idea.id in liked_ideas
+
+    response = render(request, 'idea.html', {'ideas': ideas})
+
+    if not cookie_id:
+        cookie_id = str(uuid.uuid4())
+        # Cookie ni 1 yilga saqlab qo'yish
+        response.set_cookie('cookie_id', cookie_id, max_age=60*60*24*365)
+
+    return response
 
 def like_idea(request, id):
     idea = get_object_or_404(IdeaBlog, id=id)
@@ -46,6 +55,8 @@ def like_idea(request, id):
         response = JsonResponse({'status': 'like', 'like_count': idea.like})
 
     if not request.COOKIES.get('cookie_id'):
-        response.set_cookie('cookie_id', cookie_id)
+        # Cookie ni 1 yilga saqlab qo'yish
+        response.set_cookie('cookie_id', cookie_id, max_age=60*60*24*365)
 
     return response
+
