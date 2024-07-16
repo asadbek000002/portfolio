@@ -1,0 +1,218 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation</title>
+
+
+
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        line-height: 1.6;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    header {
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px 20px;
+        background-color: #FF9000;
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: background-color 0.3s ease;
+    }
+
+    .doc-title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .doc-title h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        color: #007BFF;
+    }
+
+    .doc-content {
+        margin-bottom: 20px;
+    }
+
+    .doc-content p, .doc-content img {
+        max-width: 100%;
+        word-wrap: break-word;
+    }
+
+    .doc-content img {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .theme-toggle {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .theme-toggle img {
+        width: 32px;
+        height: 32px;
+        transition: transform 0.3s ease;
+    }
+
+    .theme-toggle:hover img {
+        transform: scale(1.1);
+    }
+
+    /* Media queries for responsiveness */
+    @media (max-width: 600px) {
+        .doc-title h1 {
+            font-size: 1.5rem;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        .doc-content p, .doc-content img {
+            font-size: 0.9rem;
+        }
+    }
+
+
+
+        .icon-container {
+            position: fixed;
+            top: 10px;
+            left: 15px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .categories {
+            position: fixed;
+            top: 70px;
+            left: 20px;
+            background-color: transparent;
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .category-item {
+            display: inline-block;
+            color: #FFFFFF; /* Matn rangi oq */
+            padding: 8px 10px;
+            font-size: medium;
+            transition: all 0.3s ease;
+            background: rgba(255, 165, 0, 0.8); /* Shaffof orqa fon */
+            background: linear-gradient(to right, rgba(255, 165, 0, 0.8), rgba(255, 127, 80, 0.8)); /* Shaffof orqa fon */
+            border-radius: 20px;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            margin: 5px;
+        }
+
+        .category-item:hover, .category-item:focus {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, rgba(255, 127, 80, 0.8), rgba(255, 165, 0, 0.8)); /* Hover vaqtida shaffof orqa fon */
+            color: inherit; /* Matn rangini o'zgartirmaslik */
+        }
+
+        .categories.active {
+            display: flex;
+        }
+
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+          .category-item {
+            padding: 6px 8px;
+            font-size: smaller;
+          }
+        }
+
+</style>
+<body>
+    <header>
+        <div class="icon-container" onclick="toggleCategories()">
+        <img src="{% static 'images/menu.png' %}" alt="Category Icon" class="category-icon">
+    </div>
+    <div class="categories" id="category-list">
+          <a href="{% url 'home' %}" class="category-item">Home page</a>
+        <a href="{% url 'photo' %}" class="category-item">Photos</a>
+        <a href="{% url 'important_events' %}" class="category-item">Results</a>
+        <a href="{% url 'idea_blog' %}" class="category-item">Thoughts</a>
+        <a href="{% url 'checkview' %}" class="category-item">chat</a>
+    </div>
+
+    <script>
+        function toggleCategories() {
+            const categoryList = document.getElementById('category-list');
+            categoryList.classList.toggle('active');
+        }
+    </script>
+
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <img src="{% static 'images/moon.png' %}" id="theme-icon" alt="Toggle Theme">
+        </button>
+    </header>
+    <div class="container" id="content-container">
+        {% for document in documents %}
+        <div class="doc-title">
+            <h1 class="document-title">{{ document.title }}</h1>
+        </div>
+        <div class="doc-content">
+            <p class="document-text">{{ document.text|safe }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        function toggleTheme() {
+            var container = document.getElementById('content-container');
+            var icon = document.getElementById('theme-icon');
+            var currentBgColor = getComputedStyle(container).backgroundColor;
+
+            if (currentBgColor === 'rgb(255, 255, 255)') { // White color
+                container.style.backgroundColor = '#333';
+                container.style.color = 'white';
+                icon.src = '{% static "images/moon-oq.png" %}';
+            } else {
+                container.style.backgroundColor = 'white';
+                container.style.color = '#333';
+                icon.src = '{% static "images/moon.png" %}';
+            }
+        }
+    </script>
+</body>
+</html>

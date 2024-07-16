@@ -1,7 +1,7 @@
 import uuid
 
 from django.db import models
-
+from ckeditor_uploader.fields import RichTextUploadingField
 from user.models import CustomUser
 
 
@@ -31,3 +31,8 @@ class LikeIdea(models.Model):
 
     class Meta:
         unique_together = ('user', 'idea', 'cookie_id')
+
+
+class Document(models.Model):
+    title = models.CharField(max_length=250)
+    text = RichTextUploadingField()

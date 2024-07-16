@@ -47,6 +47,7 @@
 
     <!-- Theme style  -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
 
     <!-- Modernizr JS -->
     <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
@@ -60,7 +61,23 @@
 
 </head>
 <body>
-<a href="{% url 'home' %}" class="arrow"><i class="icomoon icon-home"></i></a>
+ <div class="icon-container" onclick="toggleCategories()">
+        <img src="{% static 'images/menu.png' %}" alt="Category Icon" class="category-icon">
+    </div>
+    <div class="categories" id="category-list">
+          <a href="{% url 'home' %}" class="category-item">Home page</a>
+        <a href="{% url 'photo' %}" class="category-item">Photos</a>
+        <a href="{% url 'important_events' %}" class="category-item">Results</a>
+        <a href="{% url 'idea_blog' %}" class="category-item">Thoughts</a>
+        <a href="{% url 'checkview' %}" class="category-item">chat</a>
+    </div>
+
+    <script>
+        function toggleCategories() {
+            const categoryList = document.getElementById('category-list');
+            categoryList.classList.toggle('active');
+        }
+    </script>
 <div id="fh5co-blog">
     <div class="container">
         <div class="row animate-box">

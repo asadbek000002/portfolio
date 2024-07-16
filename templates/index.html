@@ -60,6 +60,10 @@
 
 </head>
 <body>
+
+
+<body>
+
 <!-- Header -->
 <div class="fh5co-loader"></div>
 <div id="page">
@@ -79,6 +83,10 @@
                                 <li><a href="{% url 'important_events' %}">Results</a></li>
                                 <li><a href="{% url 'idea_blog' %}">Thoughts</a></li>
                                 <li><a href="{% url 'checkview'  %}">chat</a></li>
+                              {% if request.user.is_staff %}
+                                <li><a href="{% url 'get_room'  %}">chats</a></li>
+                                <li><a href="{% url 'document'  %}">document</a></li>
+                              {% endif %}
                             </ul>
                             </p>
                         </div>

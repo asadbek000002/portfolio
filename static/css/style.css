@@ -1356,9 +1356,9 @@ input[type="text"] {
 .arrow {
 		max-width: 100%;
 		position: absolute;
-		top: 2px;
-		left: 8px;
-		font-size: 29px;
+		top: 6px;
+		left: 14px;
+		font-size: 40px;
 
 
 	}
@@ -1369,8 +1369,6 @@ input[type="text"] {
     color: black;
     margin-right: 2px;
 }
-
-
 
 
 

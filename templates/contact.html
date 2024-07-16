@@ -13,8 +13,12 @@
     <!-- Icomoon Icon Fonts-->
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+
+
 
     <style>
          body {
@@ -32,12 +36,16 @@
         }
         .chat-header {
             padding: 15px;
-            background: #FF9000;
-            color: #fff;
+            background: #fff;
+            color: #FF9000;
             text-align: center;
             font-size: 24px;
             margin: 0; /* Remove margin */
+            font-family: 'Roboto', sans-serif; /* Yangi shrift */
+            font-weight: bold; /* Qalin shrift */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Soyali effekt */
         }
+
         .chat-messages {
             height: 80vh; /* 60% of viewport height */
             overflow-y: auto;
@@ -131,7 +139,23 @@
 
 </head>
 <body>
-    	<a href="{% url 'home' %}" class="arrow"><i class="icomoon icon-home"></i></a>
+     <div class="icon-container" onclick="toggleCategories()">
+        <img src="{% static 'images/menu.png' %}" alt="Category Icon" class="category-icon">
+    </div>
+    <div class="categories" id="category-list">
+          <a href="{% url 'home' %}" class="category-item">Home page</a>
+        <a href="{% url 'photo' %}" class="category-item">Photos</a>
+        <a href="{% url 'important_events' %}" class="category-item">Results</a>
+        <a href="{% url 'idea_blog' %}" class="category-item">Thoughts</a>
+        <a href="{% url 'checkview' %}" class="category-item">chat</a>
+    </div>
+
+    <script>
+        function toggleCategories() {
+            const categoryList = document.getElementById('category-list');
+            categoryList.classList.toggle('active');
+        }
+    </script>
 
 
 <div class="chat-container">
