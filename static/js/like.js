@@ -23,7 +23,12 @@ function likeIdea(ideaId) {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.status === 'like' || data.status === 'unlike') {
             document.getElementById(`likes-count-${ideaId}`).innerText = data.like_count;
@@ -51,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
 function likeEvent(eventId) {
     fetch(`/like/event/${eventId}/`, {
         method: 'POST',
@@ -60,7 +64,12 @@ function likeEvent(eventId) {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.status === 'like' || data.status === 'unlike') {
             document.getElementById(`likes-count-${eventId}`).innerText = data.like_count;
@@ -79,7 +88,6 @@ function likeEvent(eventId) {
     .catch(error => console.error('Error:', error));
 }
 
-// Page load
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.like-icon').forEach(function(icon) {
         const ideaId = icon.id.split('-').pop();

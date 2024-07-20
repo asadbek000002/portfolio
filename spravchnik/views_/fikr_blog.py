@@ -29,9 +29,10 @@ def idea_blog(request):
     if not cookie_id:
         cookie_id = str(uuid.uuid4())
         # Cookie ni 1 yilga saqlab qo'yish
-        response.set_cookie('cookie_id', cookie_id, max_age=60*60*24*365)
+        response.set_cookie('cookie_id', cookie_id, max_age=60 * 60 * 24 * 365)
 
     return response
+
 
 def like_idea(request, id):
     idea = get_object_or_404(IdeaBlog, id=id)
@@ -56,7 +57,6 @@ def like_idea(request, id):
 
     if not request.COOKIES.get('cookie_id'):
         # Cookie ni 1 yilga saqlab qo'yish
-        response.set_cookie('cookie_id', cookie_id, max_age=60*60*24*365)
+        response.set_cookie('cookie_id', cookie_id, max_age=60 * 60 * 24 * 365)
 
     return response
-
